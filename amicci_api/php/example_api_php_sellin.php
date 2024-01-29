@@ -7,7 +7,7 @@
 # This PYTHON example send the data via post request to one of the APIs avaiable by Amicci. 
 # It's a generic code, and simulates fictional number of data to be sent.
 # The code iterates over a bunch of data and send a maximum number of data each time. The current maximum data
-# per request is 20000.  
+# per request is 20000.
 # The number of the requests to the API will depend on the ammount of data, because it has to respect
 # the maximum data per request. 
 # The data should be grouped and send the maximum possible at once.
@@ -17,7 +17,7 @@ $MAX_DATA = 40000;
 # Max itens per post request in the API
 $MAX_QUANTITY = 20000;
 
-# URL of the Stock API (follow Amicci official links for the API URL)
+# URL of the Sellin API (follow Amicci official links for the API URL)
 $URL = '';
 # Authorization Token (provided by Amicci official webiste, available at https://platform.amicci.com.br/home)
 $TOKEN = '';
@@ -30,27 +30,41 @@ if ($URL == NULL or $TOKEN == NULL)
 }
 
 # Class object with the available fields
-class Stock
+class Sellin
 {
+  #Required
   public $date = NULL;
+  public $id_invoice = NULL;
   public $id_product = NULL;
-  public $id_store = NULL;
-  public $Quantity = NULL;
+  public $id_seller = NULL;
+  public $purchase_value_gross = NULL;
+  public $purchase_value_liquid = NULL;
+  public $quantity = NULL;
 
-  public function __construct($date, $id_product, $id_store, $quantity)
+
+  public function __construct($date, $id_invoice, $id_product, $id_seller, $purchase_value_gross, $purchase_value_liquid, $quantity)
   {
     if (empty($date))
       throw new Exception("Field date is required");
+    elseif (empty($id_invoice))
+      throw new Exception("Field id_invoice is required");
     elseif (empty($id_product))
       throw new Exception("Field id_product is required");
-    elseif (empty($id_store))
-      throw new Exception("Field id_store is required");
+    elseif (empty($id_seller))
+      throw new Exception("Field id_seller is required");
+    elseif (empty($purchase_value_gross))
+      throw new Exception("Field purchase_value_gross is required");
+    elseif (empty($purchase_value_liquid))
+      throw new Exception("Field purchase_value_liquid is required");
     elseif (empty($quantity))
       throw new Exception("Field quantity is required");
     $this->date = $date;
+    $this->id_invoice = $id_invoice;
     $this->id_product = $id_product;
-    $this->id_store = $id_store;
-    $this->Quantity = $quantity;
+    $this->id_seller = $id_seller;
+    $this->purchase_value_gross = $purchase_value_gross;
+    $this->purchase_value_liquid = $purchase_value_liquid;
+    $this->quantity = $quantity;
   }
 }
 
@@ -61,10 +75,11 @@ for ($i = 1; $i <= $MAX_DATA; $i = $i + $MAX_QUANTITY)
   $list_json = array();
   for ($j = 1; $j <= $MAX_QUANTITY; $j++)
   {
+    # Create an object and push it into the array/list
     try
     {
       # Creating object with required fields
-      $obj = new Stock(date("Y-m-d"), $j+$i-1, $j+$i-1, 10);
+      $obj = new Sellin(date('Y-m-d', strtotime(date('Y-m-d'). ' - 1 days')), $j+$i-1, $j+$i-1, $j+$i-1, 12, 10, 8);
     }
     catch (Exception $e) 
     {
@@ -96,7 +111,7 @@ for ($i = 1; $i <= $MAX_DATA; $i = $i + $MAX_QUANTITY)
   {
     #The response of the API witch will be initialized with null value
     $response = NULL;
-    echo "Sending data to  $URL \n";
+    echo "Sending data to $URL \n";
     $response = curl_exec($curl);
     sleep(3);
   } 
