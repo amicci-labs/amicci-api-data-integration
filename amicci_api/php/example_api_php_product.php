@@ -34,11 +34,11 @@ class Product
 {
   #Required
   public $id_product = NULL;
+  public $brand = NULL;
   public $name = NULL;
   public $n1 = NULL;
   public $n2 = NULL;
   public $n3 = NULL;
-  public $brand = NULL;
 
   #Optional
   public $n4 = NULL;
@@ -52,10 +52,12 @@ class Product
   public $unity = NULL;
   public $date_launch = NULL;
 
-  public function __construct($id_product, $name, $n1, $n2, $n3, $brand)
+  public function __construct($id_product, $brand, $name, $n1, $n2, $n3)
   {
     if (empty($id_product))
       throw new Exception("Field id_product is required");
+    elseif (empty($brand))
+      throw new Exception("Field brand is required");
     elseif (empty($name))
       throw new Exception("Field name is required");
     elseif (empty($n1))
@@ -64,14 +66,12 @@ class Product
       throw new Exception("Field n2 is required");
     elseif (empty($n3))
       throw new Exception("Field n3 is required");
-    elseif (empty($brand))
-      throw new Exception("Field brand is required");
     $this->id_product = $id_product;
+    $this->brand = $brand;
     $this->name = $name;
     $this->n1 = $n1;
     $this->n2 = $n2;
     $this->n3 = $n3;
-    $this->brand = $brand;
   }
 }
 
@@ -86,7 +86,7 @@ for ($i = 1; $i <= $MAX_DATA; $i = $i + $MAX_QUANTITY)
     try
     {
       # Creating object with required fields
-      $obj = new Product($j+$i-1, "product_name_$j+$i-1", "unity", "Bebida", "Cerveja", "product_brand_$j+$i-1");
+      $obj = new Product($j+$i-1, "product_brand_".($j+$i-1), "product_name_".($j+$i-1), "unity", "Bebida", "Cerveja");
       # Assign optional fields if available
       $obj->n4 = "n4";
       $obj->n5 = "n5";

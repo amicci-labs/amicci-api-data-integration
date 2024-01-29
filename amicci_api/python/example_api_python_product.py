@@ -52,9 +52,11 @@ class Product:
     unity = None
     date_launch = None
 
-    def __init__(self, id_product, name, n1, n2, n3, brand):
+    def __init__(self, id_product, brand, name, n1, n2, n3):
         if id_product is None:
             raise ValueError(f"Field id_product is required")
+        if brand is None:
+            raise ValueError(f"Field brand is required")
         if name is None:
             raise ValueError(f"Field name is required")
         if n1 is None:
@@ -63,14 +65,12 @@ class Product:
             raise ValueError(f"Field n2 is required")
         if n3 is None:
             raise ValueError(f"Field n3 is required")
-        if brand is None:
-            raise ValueError(f"Field brand is required")
         self.id_product = id_product
+        self.brand = brand
         self.name = name
         self.n1 = n1
         self.n2 = n2
         self.n3 = n3
-        self.brand = brand
 
 # Iterates over the maximum number of items to send
 for i in range(1, MAX_DATA + 1, MAX_QUANTITY):
@@ -80,7 +80,7 @@ for i in range(1, MAX_DATA + 1, MAX_QUANTITY):
         # Creates an object and adds it to the list
         try:
             # Creating object with required fields
-            obj = Product(j+i-1, f"product_name_{j+i-1}", "unity", "Bebida", "Cerveja", f"product_brand_{j+i-1}")
+            obj = Product(j+i-1, f"product_brand_{j+i-1}", f"product_name_{j+i-1}", "unity", "Bebida", "Cerveja")
             # Assign optional fields if available
             obj.n4 = "n4"
             obj.n5 = "n5"
