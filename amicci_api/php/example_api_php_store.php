@@ -17,7 +17,7 @@ $MAX_DATA = 40000;
 # Max itens per post request in the API
 $MAX_QUANTITY = 20000;
 
-# URL of the Stock API (follow Amicci official links for the API URL)
+# URL of the Store API (follow Amicci official links for the API URL)
 $URL = '';
 # Authorization Token (provided by Amicci official webiste, available at https://platform.amicci.com.br/home)
 $TOKEN = '';
@@ -30,27 +30,37 @@ if ($URL == NULL or $TOKEN == NULL)
 }
 
 # Class object with the available fields
-class Stock
+class Store
 {
-  public $date = NULL;
-  public $id_product = NULL;
+  #Required
   public $id_store = NULL;
-  public $Quantity = NULL;
+  public $city = NULL;
+  public $name = NULL;
+  public $state = NULL;
+  public $type = NULL;
 
-  public function __construct($date, $id_product, $id_store, $quantity)
+  #Optional
+  public $date_launch = NULL;
+  public $format = NULL;
+  public $zip_code = NULL;
+
+  public function __construct($id_store, $city, $name, $state, $type)
   {
-    if (empty($date))
+    if (empty($id_store))
       throw new Exception("Field date is required");
-    elseif (empty($id_product))
-      throw new Exception("Field id_product is required");
-    elseif (empty($id_store))
+    elseif (empty($city))
+      throw new Exception("Field city is required");
+    elseif (empty($name))
       throw new Exception("Field id_store is required");
-    elseif (empty($quantity))
+    elseif (empty($state))
       throw new Exception("Field quantity is required");
-    $this->date = $date;
-    $this->id_product = $id_product;
+    elseif (empty($type))
+      throw new Exception("Field quantity is required");
     $this->id_store = $id_store;
-    $this->Quantity = $quantity;
+    $this->city = $city;
+    $this->name = $name;
+    $this->state = $state;
+    $this->type = $type;
   }
 }
 
@@ -61,10 +71,15 @@ for ($i = 1; $i <= $MAX_DATA; $i = $i + $MAX_QUANTITY)
   $list_json = array();
   for ($j = 1; $j <= $MAX_QUANTITY; $j++)
   {
+    # Create an object and push it into the array/list
     try
     {
       # Creating object with required fields
-      $obj = new Stock(date("Y-m-d"), $j+$i-1, $j+$i-1, 10);
+      $obj = new Store($j+$i-1, "São Paulo", "store_name_".($j+$i-1), "SP", "L");
+      # Assign optional fields if available
+      $obj->date_launch = "2020-05-05";
+      $obj->format = "digital";
+      $obj->zip_code = "01415-002";
     }
     catch (Exception $e) 
     {
@@ -96,7 +111,7 @@ for ($i = 1; $i <= $MAX_DATA; $i = $i + $MAX_QUANTITY)
   {
     #The response of the API witch will be initialized with null value
     $response = NULL;
-    echo "Sending data to  $URL \n";
+    echo "Sending data to $URL \n";
     $response = curl_exec($curl);
     sleep(3);
   } 

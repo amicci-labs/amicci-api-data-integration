@@ -14,24 +14,36 @@ import json
 import requests
 import time
 
-MAX_DATA = 20000
-MAX_QUANTITY = 10000
-# URL of Amicci Seller API
+# Total number of itens, in that case it should come from a file/database etc. But in out example it will be a fixed number.
+MAX_DATA = 40000
+# Max itens per post request in the API
+MAX_QUANTITY = 20000
+
+# URL of the Seller API (follow Amicci official links for the API URL)
 URL = ""
-# Authorization token
+# Authorization Token (provided by Amicci official webiste, available at https://platform.amicci.com.br/home)
 TOKEN = ""
 
+#Verify if URL and TOKEN were provided
+if URL is None or TOKEN is None:
+    print("Must provide a valid URL and a valid TOKEN")
+    exit()
+
+# Class object with the available fields
 class Seller:
 
+    #Required
     id_seller=None
     name=None
+
+    #Optional
     cnpj=None
 
     def __init__(self, id_seller, name):
         if id_seller is None:
-            raise ValueError(f"Field id_seller is mandatory")
+            raise ValueError(f"Field id_seller is required")
         if name is None:
-            raise ValueError(f"Field name is mandatory")  
+            raise ValueError(f"Field name is required")  
         self.id_seller = id_seller
         self.name = name
         
@@ -42,15 +54,13 @@ for i in range(1, MAX_DATA + 1, MAX_QUANTITY):
     for j in range(1, MAX_QUANTITY + 1):
         # Creates an object and adds it to the list
         try:
-            # Creating Seller object with only mandatory fields
-            seller_obj = Seller(j, f"Seller_{j}")
-            # Assigning non-mandatory values ​​to the Seller type object, if it exists
-            seller_obj.cnpj = "22019551000130"
-            list_json.append(seller_obj.__dict__)
-        except ValueError as e:
-            print(f"Object {j} not constructed: {e}")
+            # Creating object with required fields
+            obj = Seller(j+i-1, f"seller_name_{j+i-1}")
+            # Assign optional fields if available
+            obj.cnpj = "22019551000130"
+            list_json.append(obj.__dict__)
         except Exception as e:
-            print(f"An error has occurred: {e}")
+            print(f"Object {j+i-1} not constructed: {e}")
             
     # Converts the list to JSON format, which is required
     fields_string = json.dumps(list_json)
@@ -63,9 +73,9 @@ for i in range(1, MAX_DATA + 1, MAX_QUANTITY):
         response = requests.post(URL, data=fields_string, headers=headers, timeout=180)
         if response.status_code == 200 or response.status_code == 201:
             print(response.json())
-            print(f"Data processed for data mass {j-MAX_QUANTITY}-{j} successfully")
+            print(f"Data processed from {i} to {i + MAX_QUANTITY-1} successfully")
         else:
-            print(f"Data NOT processed for data mass {j-MAX_QUANTITY}-{j}")                
+            print(f"Data NOT processed from {i} to {i + MAX_QUANTITY-1} successfully")              
         time.sleep(3)
     except Exception as e:
-        print(f"Exception caught for data masss {j-MAX_QUANTITY}-{j}: {e}")
+        print(f"Exception caught for on data {i} to {i + MAX_QUANTITY-1}: {e}")

@@ -7,7 +7,7 @@
 # This PYTHON example send the data via post request to one of the APIs avaiable by Amicci. 
 # It's a generic code, and simulates fictional number of data to be sent.
 # The code iterates over a bunch of data and send a maximum number of data each time. The current maximum data
-# per request is 20000.  
+# per request is 20000.
 # The number of the requests to the API will depend on the ammount of data, because it has to respect
 # the maximum data per request. 
 # The data should be grouped and send the maximum possible at once.
@@ -17,7 +17,7 @@ $MAX_DATA = 40000;
 # Max itens per post request in the API
 $MAX_QUANTITY = 20000;
 
-# URL of the Stock API (follow Amicci official links for the API URL)
+# URL of the Seller API (follow Amicci official links for the API URL)
 $URL = '';
 # Authorization Token (provided by Amicci official webiste, available at https://platform.amicci.com.br/home)
 $TOKEN = '';
@@ -30,27 +30,23 @@ if ($URL == NULL or $TOKEN == NULL)
 }
 
 # Class object with the available fields
-class Stock
+class Seller
 {
-  public $date = NULL;
-  public $id_product = NULL;
-  public $id_store = NULL;
-  public $Quantity = NULL;
+  #Required
+  public $id_seller = NULL;
+  public $name = NULL;
 
-  public function __construct($date, $id_product, $id_store, $quantity)
+  #Optional
+  public $cnpj = NULL;
+
+  public function __construct($id_seller, $name)
   {
-    if (empty($date))
-      throw new Exception("Field date is required");
-    elseif (empty($id_product))
-      throw new Exception("Field id_product is required");
-    elseif (empty($id_store))
-      throw new Exception("Field id_store is required");
-    elseif (empty($quantity))
-      throw new Exception("Field quantity is required");
-    $this->date = $date;
-    $this->id_product = $id_product;
-    $this->id_store = $id_store;
-    $this->Quantity = $quantity;
+    if (empty($id_seller))
+      throw new Exception("Field id_seller is required");
+    elseif (empty($name))
+      throw new Exception("Field name is required");
+    $this->id_seller = $id_seller;
+    $this->name = $name;
   }
 }
 
@@ -61,10 +57,13 @@ for ($i = 1; $i <= $MAX_DATA; $i = $i + $MAX_QUANTITY)
   $list_json = array();
   for ($j = 1; $j <= $MAX_QUANTITY; $j++)
   {
+    # Create an object and push it into the array/list
     try
     {
       # Creating object with required fields
-      $obj = new Stock(date("Y-m-d"), $j+$i-1, $j+$i-1, 10);
+      $obj = new Seller($j+$i-1, "seller_name_".($j+$i-1));
+      # Assign optional fields if available
+      $obj->cnpj = "22019551000130";
     }
     catch (Exception $e) 
     {
@@ -96,7 +95,7 @@ for ($i = 1; $i <= $MAX_DATA; $i = $i + $MAX_QUANTITY)
   {
     #The response of the API witch will be initialized with null value
     $response = NULL;
-    echo "Sending data to  $URL \n";
+    echo "Sending data to $URL \n";
     $response = curl_exec($curl);
     sleep(3);
   } 
