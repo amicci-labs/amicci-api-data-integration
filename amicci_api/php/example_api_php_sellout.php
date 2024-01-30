@@ -2,9 +2,9 @@
 #
 # AUTHOR: Marcus Siqueira
 # Requirements:
-#   - Python 7.1.1 or later
+#   - Php 7.1.1 or later
 #   - Curl 8.4.0
-# This PYTHON example send the data via post request to one of the APIs avaiable by Amicci. 
+# This PHP example send the data via post request to one of the APIs avaiable by Amicci. 
 # It's a generic code, and simulates fictional number of data to be sent.
 # The code iterates over a bunch of data and send a maximum number of data each time. The current maximum data
 # per request is 20000.
@@ -84,12 +84,13 @@ for ($i = 1; $i <= $MAX_DATA; $i = $i + $MAX_QUANTITY)
       $obj->cost_gross = 9;
       $obj->cost_liquid = 7;
       $obj->sale_channel = 'digital';
+      array_push($list_json, $obj);
     }
     catch (Exception $e) 
     {
       echo "Object " . ($j+$i-1) . " not constructed: $e";
     }
-    array_push($list_json, $obj);
+    
   }
 
   # Encode the array/list into a json pattern, witch is required.
