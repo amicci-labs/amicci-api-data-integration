@@ -2,6 +2,8 @@
 # AUTHOR: Juliana Teixeira
 # Requirements:
 #   - Python 3.9.2 or later
+#   - requests:
+#      - pip install requests
 # This PYTHON example send the data via post request to one of the APIs avaiable by Amicci. 
 # It's a generic code, and simulates fictional number of data to be sent.
 # The code iterates over a bunch of data and send a maximum number of data each time. The current maximum data
@@ -60,7 +62,7 @@ for i in range(1, MAX_DATA + 1, MAX_QUANTITY):
         # Creates an object and adds in to the list
         try:
             # Creating object with required fields
-            obj = Stock((date.today() - timedelta(days=1)).strftime('%Y-%m-%d'), j+i-1, j+i-1, 10)
+            obj = Stock((date.today() - timedelta(days=1)).strftime('%Y-%m-%d'), (j+i-1), (j+i-1), 10)
             list_json.append(obj.__dict__)
         except Exception as e:
             print(f"Object {j+i-1} not constructed: {e}")

@@ -2,6 +2,8 @@
 # AUTHOR: Juliana Teixeira
 # Requirements:
 #   - Python 3.9.2 or later
+#   - requests:
+#      - pip install requests
 # This PYTHON example send the data via post request to one of the APIs avaiable by Amicci. 
 # It's a generic code, and simulates fictional number of data to be sent.
 # The code iterates over a bunch of data and send a maximum number of data each time. The current maximum data
@@ -41,16 +43,16 @@ class Product:
     n3 = None
 
     #Optional
+    id_seller = None
+    date_launch = None
+    ean = None
     n4 = None
     n5 = None
     n6 = None
     n7 = None
     n8 = None
-    ean = None
     private_label_flag = None
-    id_seller = None
     unity = None
-    date_launch = None
 
     def __init__(self, id_product, brand, name, n1, n2, n3):
         if id_product is None:
@@ -82,6 +84,8 @@ for i in range(1, MAX_DATA + 1, MAX_QUANTITY):
             # Creating object with required fields
             obj = Product(j+i-1, f"product_brand_{j+i-1}", f"product_name_{j+i-1}", "unity", "Bebida", "Cerveja")
             # Assign optional fields if available
+            obj.id_seller = j+i-1
+            obj.date_launch = "2020-05-05"
             obj.n4 = "n4"
             obj.n5 = "n5"
             obj.n6 = "n6"
@@ -89,9 +93,7 @@ for i in range(1, MAX_DATA + 1, MAX_QUANTITY):
             obj.n8 = "n8"
             obj.ean = "7894900019902"
             obj.private_label_flag = "1"
-            obj.id_seller = j+i-1
             obj.unity = "l"
-            obj.date_launch = "2020-05-05"
             list_json.append(obj.__dict__)
         except Exception as e:
             print(f"Object {j+i-1} not constructed: {e}")

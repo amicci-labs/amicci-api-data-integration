@@ -2,6 +2,8 @@
 # AUTHOR: Juliana Teixeira
 # Requirements:
 #   - Python 3.9.2 or later
+#   - requests:
+#      - pip install requests
 # This PYTHON example send the data via post request to one of the APIs avaiable by Amicci. 
 # It's a generic code, and simulates fictional number of data to be sent.
 # The code iterates over a bunch of data and send a maximum number of data each time. The current maximum data
@@ -70,7 +72,7 @@ for i in range(1, MAX_DATA + 1, MAX_QUANTITY):
         # Creates an object and adds in to the list
         try:
             # Creating object with required fields
-            obj = Store(j+i-1, "São Paulo", f"store_name_{j+i-1}", "SP", "L")
+            obj = Store((j+i-1), "São Paulo", f"store_name_{j+i-1}", "SP", "L")
             # Assign optional fields if available
             obj.date_launch = "2020-05-05"
             obj.zip_code = "01415-002"

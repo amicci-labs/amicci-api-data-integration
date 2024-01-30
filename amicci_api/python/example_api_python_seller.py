@@ -2,6 +2,8 @@
 # AUTHOR: Juliana Teixeira
 # Requirements:
 #   - Python 3.9.2 or later
+#   - requests:
+#      - pip install requests
 # This PYTHON example send the data via post request to one of the APIs avaiable by Amicci. 
 # It's a generic code, and simulates fictional number of data to be sent.
 # The code iterates over a bunch of data and send a maximum number of data each time. The current maximum data

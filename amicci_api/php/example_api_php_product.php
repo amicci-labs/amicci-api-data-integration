@@ -2,9 +2,9 @@
 #
 # AUTHOR: Marcus Siqueira
 # Requirements:
-#   - Python 7.1.1 or later
+#   - Php 7.1.1 or later
 #   - Curl 8.4.0
-# This PYTHON example send the data via post request to one of the APIs avaiable by Amicci. 
+# This PHP example send the data via post request to one of the APIs avaiable by Amicci. 
 # It's a generic code, and simulates fictional number of data to be sent.
 # The code iterates over a bunch of data and send a maximum number of data each time. The current maximum data
 # per request is 20000.
@@ -41,16 +41,16 @@ class Product
   public $n3 = NULL;
 
   #Optional
+  public $id_seller = NULL;
+  public $date_launch = NULL;
+  public $ean = NULL;
   public $n4 = NULL;
   public $n5 = NULL;
   public $n6 = NULL;
   public $n7 = NULL;
   public $n8 = NULL;
-  public $ean = NULL;
   public $private_label_flag = NULL;
-  public $id_seller = NULL;
   public $unity = NULL;
-  public $date_launch = NULL;
 
   public function __construct($id_product, $brand, $name, $n1, $n2, $n3)
   {
@@ -88,23 +88,22 @@ for ($i = 1; $i <= $MAX_DATA; $i = $i + $MAX_QUANTITY)
       # Creating object with required fields
       $obj = new Product($j+$i-1, "product_brand_".($j+$i-1), "product_name_".($j+$i-1), "unity", "Bebida", "Cerveja");
       # Assign optional fields if available
+      $obj->id_seller = $j+$i-1;
+      $obj->date_launch = "2020-05-05";
+      $obj->ean = "7894900019902";
       $obj->n4 = "n4";
       $obj->n5 = "n5";
       $obj->n6 = "n6";
       $obj->n7 = "n7";
       $obj->n8 = "n8";
-      $obj->ean = "7894900019902";
       $obj->private_label_flag = "1";
-      $obj->id_seller = $j+$i-1;
       $obj->unity = "l";
-      $obj->date_launch = "2020-05-05";
-
+      array_push($list_json, $obj);
     }
     catch (Exception $e) 
     {
       echo "Object " . ($j+$i-1) . " not constructed: $e";
     }
-    array_push($list_json, $obj);
   }
 
   # Encode the array/list into a json pattern, witch is required.

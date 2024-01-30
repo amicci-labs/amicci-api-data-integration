@@ -1,6 +1,6 @@
 # Amicci API Data Integration
 
-Bem-vindo ao repositório da Amicci para integração de dados via API! Aqui, você encontrará exemplos em Python e PHP que te guiarão na utilização da nossa API para potencializar a sua marca. 
+Bem-vindo ao repositório da Amicci para integração de dados via API! Aqui, você encontrará exemplos em Python, PHP e Ruby que te guiarão na utilização da nossa API para potencializar a sua marca. 
 
 ## Sobre a API
 
@@ -8,7 +8,7 @@ Nossa API é uma ponte robusta e flexível para a integração de dados entre a 
 
 ## Exemplos de Integração
 
-Neste repositório, disponibilizamos exemplos práticos nas linguagens Python e PHP. Estes exemplos servem como um guia rápido para você começar a integrar seus dados com nossa API de forma eficiente e sem complicações.
+Neste repositório, disponibilizamos exemplos práticos nas linguagens Python, PHP e Ruby. Estes exemplos servem como um guia rápido para você começar a integrar seus dados com nossa API de forma eficiente e sem complicações.
 
 ### Python
 
@@ -17,6 +17,10 @@ Encontre exemplos em Python que demonstram como conectar e enviar dados para a A
 ### PHP
 
 Se você utiliza PHP, não se preocupe! Também temos exemplos nessa linguagem, mostrando passo a passo como fazer a integração.
+
+### Ruby
+
+Se você utiliza Ruby (com ou sem Ruby On Rails), também temos exemplos nessa linguagem, mostrando passo a passo como fazer a integração e os requisitos necessários para o funcionamento do exemplo.
 
 ## Relatórios Personalizados
 
